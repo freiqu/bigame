@@ -2,23 +2,24 @@
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-  name: "NumberDisplay",
+  name: "GuessDisplay",
   props: {
-    number: Number
+    guess: String
   },
 })
 </script>
 
 <template>
-  <div>
-    <div id="number-root">
-      <h1> {{ number }} </h1>
-    </div>
-  </div>
+<div>
+  <div id="guess-root">{{ guess?.padStart(5, "0") }}</div>
+</div>
 </template>
 
 <style scoped>
-#number-root {
+#guess-root {
   text-align: center;
+  width: 100%;
+  font-size: 30px;
+  font-weight: bold;
 }
 </style>
