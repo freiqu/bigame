@@ -10,9 +10,6 @@ export default defineComponent({
     }
   },
   emits: {
-    onType(payload: string) {
-
-    }
   },
 })
 </script>

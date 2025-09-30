@@ -1,11 +1,11 @@
-<script>
+<script lang="ts">
 import {defineComponent} from 'vue'
 import randomNumber from "./libs/randomNumber.js";
 import NumberDisplay from "./components/NumberDisplay.vue";
 import toBaseTwo from "./libs/toBaseTwo.js";
 
 
-export default defineComponent({
+export const App = defineComponent({
   name: "App",
   components: {NumberDisplay},
   data() {
@@ -46,6 +46,8 @@ export default defineComponent({
     this.newRandomNumber()
   }
 })
+
+export default App
 </script>
 
 <template>
