@@ -6,17 +6,18 @@ export default defineComponent({
   props: {
     keys: {
       default: ["0", "1"],
-      type: Array<String>,
+      type: Array<string>,
     }
   },
   emits: {
+    "type": (payload: string) => typeof payload === "string"
   },
 })
 </script>
 
 <template>
   <div>
-    <button v-for="key in keys" >{{key}}</button>
+    <button v-for="key in keys" @click="$emit('type', key)">{{key}}</button>
   </div>
 
 </template>

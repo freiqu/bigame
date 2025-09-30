@@ -5,7 +5,7 @@ import NumberDisplay from "./components/NumberDisplay.vue";
 import toBaseTwo from "./libs/toBaseTwo.js";
 
 
-export const App = defineComponent({
+export default defineComponent({
   name: "App",
   components: {NumberDisplay},
   data() {
@@ -27,6 +27,9 @@ export const App = defineComponent({
     resetGame() {
       this.newRandomNumber()
       this.guess = ""
+    },
+    handleInput() {
+
     }
   },
   computed: {
@@ -46,15 +49,13 @@ export const App = defineComponent({
     this.newRandomNumber()
   }
 })
-
-export default App
 </script>
 
 <template>
   <NumberDisplay :number="number"></NumberDisplay>
   <input
       :value="guess"
-      @input="event => guess = event.target.value">
+      @input="">
 </template>
 
 <style scoped>
