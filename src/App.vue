@@ -28,9 +28,6 @@ export default defineComponent({
       this.newRandomNumber()
       this.guess = ""
     },
-    handleInput() {
-
-    }
   },
   computed: {
     solutionString() {
@@ -53,9 +50,7 @@ export default defineComponent({
 
 <template>
   <NumberDisplay :number="number"></NumberDisplay>
-  <input
-      :value="guess"
-      @input="">
+  <input v-model="guess">
 </template>
 
 <style scoped>
