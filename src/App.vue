@@ -16,10 +16,12 @@ export default defineComponent({
     return {
       score: 0,
       streak: 0,
+      numbers: [0],
       number: 0,
       guess: "",
       min: 1,
-      max: 32,
+      round: 0,
+      showHelpNumbers: false,
     }
   },
   methods: {
@@ -27,7 +29,7 @@ export default defineComponent({
       let newNumber = 0;
       do {
         newNumber = randomNumber(this.min, this.max)
-      } while (this.number === newNumber)
+      } while (this.number === newNumber && this.numbers.includes(newNumber))
       this.number = newNumber
     },
     resetGame() {
@@ -38,22 +40,26 @@ export default defineComponent({
   computed: {
     solutionString() {
       return toBaseTwo(this.number)
-    }
+    },
+    max () {
+      return 32 + this.round * 2
+    },
   },
   watch: {
     guess(newVal) {
-      const sanitizedGuess = this.guess.replace(/[^0-1]/, "");
+      const sanitizedGuess = this.guess.replace(/[^0-1]|^0+/, "");
       if (sanitizedGuess !== this.guess) {
         this.guess = sanitizedGuess
         return;
       }
       if (newVal === this.solutionString) {
-        console.log("win")
+        // win
         this.resetGame()
         this.score = scoreCalculation(this.streak, this.score)
-        this.streak++
+        this.streak++;
+        this.round++;
       } else if (newVal.replace(/^0+/, "").length == this.solutionString.length) {
-        console.log("loose")
+        // loose
         this.guess = ""
         this.streak = 0
       }
@@ -67,16 +73,17 @@ export default defineComponent({
 
 <template>
   <div id="game">
+    <input type="checkbox" v-model="showHelpNumbers" id="help-toggle">
+    <label for="help-toggle">Help</label>
     <ScoreDisplay :score="score"/>
     <NumberDisplay :number="number"/>
-    <GuessDisplay :guess="guess"/>
+    <GuessDisplay :guess="guess" :length="solutionString.length" :help="showHelpNumbers"/>
     <Keyboard id="keyboard" @keyPressed="key => guess += key" @backspace="guess = guess.slice(0, guess.length - 1)" @reset="guess = ''"/>
   </div>
 </template>
 
 <style scoped>
 #game {
-  height: calc(100vh - 16px);
   padding: 8px;
 }
 #keyboard {
